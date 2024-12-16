@@ -138,3 +138,9 @@ Run the following command to see all available options in the `Makefile`:
 
 ngrok http --url=heavily-amused-monkey.ngrok-free.app 3000
 
+
+### Github page docs
+
+There is the github pipeline to deploy the docs, but to run that we need to have a repo with availability to create pages
+
+For all changes into the branch `main` it will create the doc release to the branch `gh-pages` and the page should point this branch
