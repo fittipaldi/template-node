@@ -1,0 +1,107 @@
+openapi: 3.0.0
+info:
+  title: User API
+  description: User API Swagger UI documentation
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000/v1
+  - url: https://heavily-amused-monkey.ngrok-free.app/v1
+paths:
+  /user/random:
+    get:
+      summary: Get a random user
+      responses:
+        '200':
+          $ref: '#/components/responses/UserResponse'
+        '404':
+          $ref: '#/components/responses/UserNotFoundResponse'
+        '500':
+          $ref: '#/components/responses/UserNotFoundResponse'
+
+  /user/{id}:
+    get:
+      summary: Get a user by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the user to be retrieved.
+          schema:
+            type: integer
+      responses:
+        '200':
+          $ref: '#/components/responses/UserResponse'
+        '404':
+          $ref: '#/components/responses/UserNotFoundResponse'
+        '500':
+          $ref: '#/components/responses/UserNotFoundResponse'
+
+components:
+  responses:
+
+    InternalServerErrorResponse:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: "Internal Server Error"
+
+    UserNotFoundResponse:
+      description: User not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: "User not found!"
+
+    UserResponse:
+      description: A user object
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: "John Smith"
+                  email:
+                    type: string
+                    example: "john@email.com"
+                  dob:
+                    type: string
+                    format: date
+                    example: "2000-01-01"
+                  age:
+                    type: integer
+                    example: 24
+                  ordinal_age:
+                    type: string
+                    example: "24th"
+                  pension_qty:
+                    type: integer
+                    example: 1
+              message:
+                type: string
+                example: "Success!"
