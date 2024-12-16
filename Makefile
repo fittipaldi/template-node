@@ -21,7 +21,7 @@ install: ## Install project dependencies
 .PHONY: reinstall
 reinstall: ## Reinstall project dependencies, delete the node_modules folder and recreate
 	rm -rf node_modules
-	npm install
+	make install
 
 .PHONY: build
 build: ## Build the application
@@ -35,6 +35,10 @@ start: build ## Start the application after building
 dev: ## Run the application in development mode
 	npm run dev
 
+.PHONY: watch
+watch: ## Run the application in development mode and watch for code changes
+	npm run watch
+
 .PHONY: test
 test: ## Run tests
 	npm run test
@@ -46,6 +50,25 @@ clean: ## Clean the build artifacts
 .PHONY: test_coverage
 test_coverage: ## Run tests with coverage reporting
 	npm run test:coverage
+
+.PHONY: migrate
+migrate: ## Run the DB migrations
+	npx sequelize-cli db:migrate
+
+.PHONY: undo_migrate
+undo_migrate: ## Run the DB undo migration
+	npx sequelize-cli db:migrate:undo
+
+.PHONY: run_doc
+run_doc: ## Start the server to build the swagger doc page
+	mkdir -p docs/assets
+	cp -r node_modules/swagger-ui-dist/*.js node_modules/swagger-ui-dist/*.css docs/assets
+	npx http-server docs
+
+.PHONY: make_doc
+make_doc: ## Organize the files for swagger doc page
+	mkdir -p docs/assets
+	cp -r node_modules/swagger-ui-dist/*.js node_modules/swagger-ui-dist/*.css docs/assets
 
 help:
 	@echo "Available commands:"

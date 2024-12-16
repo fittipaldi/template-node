@@ -1,6 +1,7 @@
 services:
-  auth-app:
+  node_app:
     build: .
+    container_name: node_app
     ports:
       - "3000:3000"
     environment:
@@ -8,3 +9,29 @@ services:
     volumes:
       - .:/usr/src/app
     command: npm start
+
+  mysql_db:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"       # Set root password
+      MYSQL_DATABASE: "api_db"          # Name of the default database
+    ports:
+      - "3306:3306"  # Map MySQL port
+    volumes:
+      - mysql_data:/var/lib/mysql  # Persist database data
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    ports:
+      - "9909:80"  # Map port 8080 on the host to port 80 in the container
+    environment:
+      PMA_HOST: mysql_db  # Name of the MySQL service
+      PMA_USER: root      # MySQL username
+      PMA_PASSWORD: root  # MySQL password
+
+volumes:
+  mysql_data:
