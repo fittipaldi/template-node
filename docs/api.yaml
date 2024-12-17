@@ -16,7 +16,7 @@ paths:
         '404':
           $ref: '#/components/responses/UserNotFoundResponse'
         '500':
-          $ref: '#/components/responses/UserNotFoundResponse'
+          $ref: '#/components/responses/InternalServerErrorResponse'
 
   /user/{id}:
     get:
@@ -34,7 +34,7 @@ paths:
         '404':
           $ref: '#/components/responses/UserNotFoundResponse'
         '500':
-          $ref: '#/components/responses/UserNotFoundResponse'
+          $ref: '#/components/responses/InternalServerErrorResponse'
 
 components:
   responses:
